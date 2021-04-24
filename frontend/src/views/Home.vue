@@ -1,5 +1,6 @@
 <template>
-  <div class="home">      
+  <div class="home">    
+    Nada que ver  
   </div>
 </template>
 

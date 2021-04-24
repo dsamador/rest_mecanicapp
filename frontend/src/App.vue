@@ -1,11 +1,12 @@
 <template>
   <v-app id="app">
     <!-- Esta es la columna lateral -->
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app dense>
       <v-list >
+
+        <!-- Elemento inicio -->
         <template>
-          <!-- Elemento inicio -->
-          <v-list-item>
+          <v-list-item :to="{name: 'Home'}">
             <v-list-item-action>
               <v-icon>home</v-icon>
             </v-list-item-action>
@@ -13,9 +14,49 @@
               Inicio
             </v-list-item-title>
           </v-list-item>
-          <!-- Fin elemento inicio -->
+        </template>
+        <!-- Fin elemento inicio -->
+
+        <!--  -->
+        <template>
+
+          <v-list-group>
+
+            <v-list-item slot="activator">
+              <v-list-item-content>
+                <v-list-item-title>
+                  Datos comunes
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item :to="{name:'tipolavado'}">
+              <v-list-item-action>
+                <v-icon>table_chart</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  Tipos de lavados
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item :to="{name:''}">
+              <v-list-item-action>
+                <v-icon>table_chart</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  Tipos de Manteminientos
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          
+          </v-list-group>
 
         </template>
+        <!--  -->
+
       </v-list>
     </v-navigation-drawer>
     <!-- Fin columna principal -->
@@ -43,17 +84,17 @@
     </v-main>
 
     <!-- Footer -->
-    <v-footer height="auto">
-      <v-layout justify-center>
-        <v-flex text-xs-center>
-          <v-card flat tile color="primery" class="white--text">
-            <v-card-text justify-center class="white--text pt-0">
+    <!-- <v-footer height="auto">
+      <v-container>
+        <v-row text-xs-center>
+          <v-card flat tile color="primary" class="white--text">
+            <v-card-text justify-center class="dark--text pt-0">
               David Amador
             </v-card-text>
           </v-card>
-        </v-flex>
-      </v-layout>
-    </v-footer>
+        </v-row>
+      </v-container>
+    </v-footer> -->
     <!-- Fin Footer -->
   </v-app>
 </template>
