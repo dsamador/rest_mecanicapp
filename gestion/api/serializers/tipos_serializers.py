@@ -8,6 +8,7 @@ class TipoLavadoSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         return {
+            'id': instance.id,
             'nombre': instance.nombre,
             'descripcion': instance.descripcion
         }

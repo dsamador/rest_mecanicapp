@@ -5,5 +5,4 @@ router = DefaultRouter()
 
 router.register(r'tipos_lavados', TipoLavadoViewSet, basename='tipos_lavados')
 
-
 urlpatterns = router.urls
