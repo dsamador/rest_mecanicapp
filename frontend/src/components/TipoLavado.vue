@@ -26,10 +26,14 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12 sm12 md12>
-                                        <v-text-field v-model="nombre" label="Nombre"></v-text-field>
+                                        <v-text-field v-model="nombre" label="Nombre *"></v-text-field>
                                     </v-flex>                                    
                                     <v-flex xs12 sm12 md12>
                                         <v-text-field v-model="descripcion" label="Descripción"></v-text-field>
+                                    </v-flex>                                    
+                                    <v-flex xs12 sm12 md12 v-show="valida">
+                                        <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
+                                        </div>
                                     </v-flex>                                    
                                 </v-layout>
                             </v-container>
@@ -82,9 +86,11 @@
                     { text: 'Actions', value: 'action', sortable:false },   
                 ],                
                 editedIndex: -1,
-                _id:'',
+                id:'',
                 nombre:'',
-                descripcion:''
+                descripcion:'',
+                valida:0,
+                validaMensaje:[]
             }
         },
         computed: {
@@ -117,14 +123,43 @@
             limpiar(){
                 this.nombre='';
                 this.descripcion='';
+                this.valida = 0;
+                this.validaMensaje = [];
+                this.editedIndex = -1;
+            },
+            validar(){
+                this.valida = 0;
+                this.validaMensaje = [];
+                if(this.nombre.length<1 || this.nombre.length>254){
+                    this.validaMensaje.push('El nombre del tipo de lavado debe tener entre 1-254 caracteres');
+                }
+                if(this.descripcion.length>254){
+                    this.validaMensaje.push('La descripcion del tipo de lavado debe tener entre 1-254 caracteres');
+                }
+                if(this.validaMensaje.length){
+                    this.valida = 1;
+                }
+                return this.valida;
             },
             guardar(){
                 let me = this;
+                if(this.validar()){
+                    return;
+                }
                 if(this.editedIndex > -1){
                     //Editar registro
+                    axios.put(`tipos/tipos_lavados/${this.id}/`, {'id':this.id, 'nombre':this.nombre, 'descripcion':this.descripcion})
+                    .then(function (response){
+                        me.limpiar();
+                        me.close();
+                        me.listar();
+                    })
+                    .catch(function(error){
+                        console.log(error)
+                    });
                 }else{
                     //Guardar registro
-                    axios.post('tipos/tipos_lavados/',{'nombre':this.nombre, 'descripcion':this.descripcion})
+                    axios.post('tipos/tipos_lavados/', {'nombre':this.nombre, 'descripcion':this.descripcion})
                     .then(function (response){
                         me.limpiar();
                         me.close();
@@ -137,9 +172,11 @@
                 }
             },
             editItem (item) {
-                this.editedIndex = this.desserts.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
+                this.id = item.id;
+                this.nombre = item.nombre;
+                this.descripcion = item.descripcion;
+                this.dialog = true;
+                this.editedIndex = 1;
             },
 
             deleteItem (item) {
