@@ -15,11 +15,11 @@
 
                 <v-dialog v-model="dialog" max-width="500px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo</v-btn>
+                        <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo registro</v-btn>
                     </template>
                     <v-card>
                         <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
+                            <span class="headline">{{ formTitle }}</span>
                         </v-card-title>
             
                         <v-card-text>
@@ -32,8 +32,7 @@
                                         <v-text-field v-model="descripcion" label="Descripción"></v-text-field>
                                     </v-flex>                                    
                                     <v-flex xs12 sm12 md12 v-show="valida">
-                                        <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
-                                        </div>
+                                        <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v"></div>
                                     </v-flex>                                    
                                 </v-layout>
                             </v-container>
@@ -43,6 +42,24 @@
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
                             <v-btn color="blue darken-1" flat @click="guardar">Guardar</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                
+                
+                <!-- Modal para eliminar -->
+                <v-dialog v-model="adModal" max-width="500">
+                    <v-card>                                                                            
+                        <v-card-title class="headline">Eliminar registro</v-card-title>
+                        <v-card-text>¿Estás seguro/a de eliminar el registro?</v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="green" @click="close2()">
+                                Cancelar
+                            </v-btn>
+                            <v-btn color="orange" @click="deleteItem()">
+                                Aceptar
+                            </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -59,13 +76,15 @@
                     <td>{{ props.item.nombre }}</td>
                     <td>{{ props.item.descripcion }}</td>                            
                     <td>
-                        <v-icon small class="mr-2" @click="editItem(props.item)"> edit </v-icon>
-                        <v-icon small class="mr-2" @click="deleteItem(props.item)"> delete </v-icon>                    
+                        <v-icon small class="mr-2" @click="editItem(props.item)"> edit </v-icon>                                              
+                        <v-icon small class="mr-2" @click="modalDelete(props.item)"> delete </v-icon>                         
                     </td>
                 </template>
+
                 <template v-slot:no-data>
                     <v-btn color="primary" @click="listar()">Resetear</v-btn>
                 </template>
+
             </v-data-table>
         </v-flex>
     </v-layout>
@@ -90,7 +109,11 @@
                 nombre:'',
                 descripcion:'',
                 valida:0,
-                validaMensaje:[]
+                validaMensaje:[],
+                adModal: false,
+                adAccion:0,
+                adNombre:'',
+                adId:''
             }
         },
         computed: {
@@ -149,7 +172,7 @@
                 if(this.editedIndex > -1){
                     //Editar registro
                     axios.put(`tipos/tipos_lavados/${this.id}/`, {'id':this.id, 'nombre':this.nombre, 'descripcion':this.descripcion})
-                    .then(function (response){
+                    .then(function(){
                         me.limpiar();
                         me.close();
                         me.listar();
@@ -163,7 +186,7 @@
                     .then(function (response){
                         me.limpiar();
                         me.close();
-                        me.listar();
+                        me.listar();/* Es necesario aquí poner el método listar */
 
                     })
                     .catch(function(error){
@@ -178,19 +201,32 @@
                 this.dialog = true;
                 this.editedIndex = 1;
             },
-
-            deleteItem (item) {
-                const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+            modalDelete(item){                
+                this.adModal = true;                                           
+                this.adNombre = item.nombre;
+                this.adId = item.id;
             },
-
+            deleteItem () {   
+                let me = this;               
+                axios.delete(`tipos/tipos_lavados/${this.adId}/`)
+                .then(function(){                                        
+                    me.adModal = false;
+                    me.listar();
+                })
+                .catch(function(error){
+                    console.log(error)
+                });                
+            },
             close () {
                 this.dialog = false
                 setTimeout(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
                     this.editedIndex = -1
                 }, 300)
-            },            
+            }, 
+            close2 () {
+                this.adModal = false;
+            }
         }
     }
 </script>
