@@ -51,7 +51,7 @@
                 <v-dialog v-model="adModal" max-width="500">
                     <v-card>                                                                            
                         <v-card-title class="headline">Eliminar registro</v-card-title>
-                        <v-card-text>¿Estás seguro/a de eliminar el registro?</v-card-text>
+                        <v-card-text>¿Estás seguro/a de eliminar el registro "<span class="light-blue lighten-3 dark--text"> {{adNombre}}</span>"?</v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="green" @click="close2()">
