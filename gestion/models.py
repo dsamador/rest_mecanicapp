@@ -29,6 +29,16 @@ class TipoLavado(Comunes):
 """ ##########  2  ########## """
 class TipoMantenimiento(Comunes):
 
+    historical = HistoricalRecords()
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
+
     class Meta:
         verbose_name = 'Tipo de mantenimiento'
         verbose_name_plural = 'Tipos de mantenimientos'
@@ -41,6 +51,16 @@ class TipoMantenimiento(Comunes):
 """ ##########  3  ########## """
 class TipoCombustible(Comunes):
 
+    historical = HistoricalRecords()
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
+
     class Meta:
         verbose_name = 'Tipo de combustible'
         verbose_name_plural = 'Tipos de combustibles'
@@ -52,6 +72,16 @@ class TipoCombustible(Comunes):
 
 """ ##########  4  ########## """
 class TipoVehiculo(Comunes):
+
+    historical = HistoricalRecords()
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
     
     class Meta:
         verbose_name = 'Tipo de vehiculo'
