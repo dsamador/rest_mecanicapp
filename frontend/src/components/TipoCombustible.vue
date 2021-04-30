@@ -2,7 +2,7 @@
     <v-layout align-start>
         <v-flex>
             <v-toolbar flat color="white">
-                <v-toolbar-title>Tipos de lavados</v-toolbar-title>
+                <v-toolbar-title>Tipos de Combustibles</v-toolbar-title>
                 <v-divider
                 class="mx-2"
                 inset
@@ -69,14 +69,13 @@
 
             <v-data-table
                 :headers="headers"
-                :items="tipos_de_lavados"
+                :items="tipos_de_combustibles"
                 :search="search"
                 class="elevation-1"
             >
                 <template v-slot:items="props">
                     <td>{{ props.item.nombre }}</td>
-                    <td v-if="props.item.descripcion">{{ props.item.descripcion }}</td>                            
-                    <td v-else>Sin descripcion</td>                            
+                    <td>{{ props.item.descripcion }}</td>                            
                     <td>
                         <v-icon small class="mr-2" @click="editItem(props.item)"> edit </v-icon>                                              
                         <v-icon small class="mr-2" @click="modalDelete(props.item)"> delete </v-icon>                         
@@ -99,7 +98,7 @@
             return{
                 dialog: false,
                 search:'',
-                tipos_de_lavados:[],
+                tipos_de_combustibles:[],
                 dialogDelete:false,
                 headers: [        
                     { text: 'Nombre', value: 'nombre', sortable:true },
@@ -134,12 +133,8 @@
         methods: {
             listar(){
                 let me = this;/* Refiere a toda esta clase */
-                axios.get('tipos/tipos_lavados/')
-                .then(
-                (response)=>{
-                    console.log(response)
-                    me.tipos_de_lavados = response.data;
-                })
+                axios.get('tipos/tipos_combustibles')
+                .then( response => me.tipos_de_combustibles = response.data)
                 .catch(function (error){
                     console.log('Errores ')
                     console.log(error);
@@ -156,10 +151,10 @@
                 this.valida = 0;
                 this.validaMensaje = [];
                 if(this.nombre.length<1 || this.nombre.length>254){
-                    this.validaMensaje.push('El nombre del tipo de lavado debe tener entre 1-254 caracteres');
+                    this.validaMensaje.push('El nombre del tipo de combustible debe tener entre 1-254 caracteres');
                 }
                 if(this.descripcion.length>254){
-                    this.validaMensaje.push('La descripcion del tipo de lavado debe tener entre 1-254 caracteres');
+                    this.validaMensaje.push('La descripcion del tipo de combustible debe tener entre 1-254 caracteres');
                 }
                 if(this.validaMensaje.length){
                     this.valida = 1;
@@ -173,7 +168,7 @@
                 }
                 if(this.editedIndex > -1){
                     //Editar registro
-                    axios.put(`tipos/tipos_lavados/${this.id}/`, {'id':this.id, 'nombre':this.nombre, 'descripcion':this.descripcion})
+                    axios.put(`tipos/tipos_combustibles/${this.id}/`, {'id':this.id, 'nombre':this.nombre, 'descripcion':this.descripcion})
                     .then(function(){
                         me.limpiar();
                         me.close();
@@ -184,7 +179,7 @@
                     });
                 }else{
                     //Guardar registro
-                    axios.post('tipos/tipos_lavados/', {'nombre':this.nombre, 'descripcion':this.descripcion})
+                    axios.post('tipos/tipos_combustibles/', {'nombre':this.nombre, 'descripcion':this.descripcion})
                     .then(function (){
                         me.limpiar();
                         me.close();
@@ -210,7 +205,7 @@
             },
             deleteItem () {   
                 let me = this;               
-                axios.delete(`tipos/tipos_lavados/${this.adId}/`)
+                axios.delete(`tipos/tipos_combustibles/${this.adId}/`)
                 .then(function(){                                        
                     me.adModal = false;
                     me.listar();

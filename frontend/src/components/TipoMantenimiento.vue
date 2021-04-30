@@ -134,11 +134,7 @@
             listar(){
                 let me = this;/* Refiere a toda esta clase */
                 axios.get('tipos/tipos_mantenimientos')
-                .then(
-                (response)=>{
-                    console.log(response)
-                    me.tipos_de_mantenimientos = response.data;
-                })
+                .then( response => me.tipos_de_mantenimientos = response.data)
                 .catch(function (error){
                     console.log('Errores ')
                     console.log(error);

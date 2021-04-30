@@ -50,7 +50,7 @@
               </v-list-tile-content>
             </v-list-tile>
 
-            <v-list-tile :to="{name: ''}">
+            <v-list-tile :to="{name: 'tipocombustible'}">
               <v-list-tile-action>
                 <v-icon>water_drop</v-icon>
               </v-list-tile-action>
