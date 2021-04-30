@@ -63,8 +63,9 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
+                <!-- Fin modal para eliminar -->                
 
-            </v-toolbar>
+            </v-toolbar>            
 
             <v-data-table
                 :headers="headers"
@@ -113,7 +114,7 @@
                 adModal: false,
                 adAccion:0,
                 adNombre:'',
-                adId:''
+                adId:''                
             }
         },
         computed: {
@@ -126,7 +127,7 @@
                 val || this.close()
             }
         },
-        created () {
+        created () {            
             this.listar();
         },
         methods: {
@@ -134,7 +135,7 @@
                 let me = this;/* Refiere a toda esta clase */
                 axios.get('tipos/tipos_lavados/')
                 .then(
-                function (response){
+                (response)=>{
                     console.log(response)
                     me.tipos_de_lavados = response.data;
                 })
@@ -165,7 +166,7 @@
                 return this.valida;
             },
             guardar(){
-                let me = this;
+                let me = this;                
                 if(this.validar()){
                     return;
                 }
@@ -175,7 +176,7 @@
                     .then(function(){
                         me.limpiar();
                         me.close();
-                        me.listar();
+                        me.listar();                        
                     })
                     .catch(function(error){
                         console.log(error)
@@ -183,7 +184,7 @@
                 }else{
                     //Guardar registro
                     axios.post('tipos/tipos_lavados/', {'nombre':this.nombre, 'descripcion':this.descripcion})
-                    .then(function (response){
+                    .then(function (){
                         me.limpiar();
                         me.close();
                         me.listar();/* Es necesario aquí poner el método listar */
@@ -199,7 +200,7 @@
                 this.nombre = item.nombre;
                 this.descripcion = item.descripcion;
                 this.dialog = true;
-                this.editedIndex = 1;
+                this.editedIndex = 1;                
             },
             modalDelete(item){                
                 this.adModal = true;                                           
@@ -222,10 +223,11 @@
                 setTimeout(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
                     this.editedIndex = -1
-                }, 300)
+                }, 300);
+                this.limpiar();/* Limpia el modal siempre que se cierra */
             }, 
             close2 () {
-                this.adModal = false;
+                this.adModal = false;                
             }
         }
     }
