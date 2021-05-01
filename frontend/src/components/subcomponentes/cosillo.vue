@@ -9,7 +9,8 @@ export default {
     name: 'cosillo',
     data(){
         return {
-            texto:'Texto necesario'
+            texto:'Texto necesario',
+            a:''
         }
     }
 }
