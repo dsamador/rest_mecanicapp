@@ -61,6 +61,8 @@
               </v-list-tile-content>
             </v-list-tile>
 
+            <ListItem texto="Otro link" materialIcon="water_drop"/>
+
           </v-list-group>
 
         </template>              
@@ -107,8 +109,13 @@
 </template>
 
 <script>
+import ListItem from './components/subcomponentes/ListItem.vue'
+
 export default {
   name: 'App',
+  components:{
+    ListItem
+  },
   data () {
     return {
       drawer: null,
