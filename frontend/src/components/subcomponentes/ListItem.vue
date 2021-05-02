@@ -15,7 +15,7 @@
 <script>
 export default {
     name:"list-item",
-    props:['texto','materialIcon', 'hacia']    
+    props:['texto','materialIcon']    
 }
 </script>
 

@@ -75,7 +75,8 @@
             >
                 <template v-slot:items="props">
                     <td>{{ props.item.nombre }}</td>
-                    <td>{{ props.item.descripcion }}</td>                            
+                    <td v-if="props.item.descripcion">{{ props.item.descripcion }}</td>                            
+                    <td v-else>Sin descripcion</td>                           
                     <td>
                         <v-icon small class="mr-2" @click="editItem(props.item)"> edit </v-icon>                                              
                         <v-icon small class="mr-2" @click="modalDelete(props.item)"> delete </v-icon>                         
