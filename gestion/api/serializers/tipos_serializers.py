@@ -39,3 +39,4 @@ class TipoCombustibleSerializer(serializers.ModelSerializer):
             'nombre': instance.nombre,
             'descripcion': instance.descripcion
         }
+

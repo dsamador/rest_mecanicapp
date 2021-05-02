@@ -59,9 +59,7 @@
                   Tipos de combustibles
                 </v-list-tile-title>
               </v-list-tile-content>
-            </v-list-tile>
-
-            <ListItem texto="Otro link" materialIcon="water_drop"/>
+            </v-list-tile>            
 
           </v-list-group>
 

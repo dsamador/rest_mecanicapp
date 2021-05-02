@@ -15,7 +15,7 @@ class BaseModel(Model):
         """Meta definition for BaseModel."""
         abstract = True
         verbose_name = 'BaseModel'
-        verbose_name_plural = 'BaseModels'
+        verbose_name_plural = 'BaseModels'        
         
 
 class Comunes(BaseModel):
@@ -25,3 +25,15 @@ class Comunes(BaseModel):
 
     class Meta:
         abstract = True
+        ordering = ['nombre'] 
+
+class Local(BaseModel):
+    
+    nombre = CharField('Nombre', max_length=255, blank=False, null=False)
+    direccion = CharField('Dirección', max_length=250, blank=True, null=True)    
+    correo = CharField('Correo', max_length=100, blank=True, null=True)    
+    telefono = CharField('Telefono', max_length=15, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['nombre'] 
