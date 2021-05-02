@@ -67,30 +67,7 @@ class TipoCombustible(Comunes):
         return self.nombre        
 
 
-""" ##########  4  ########## """
-class MarcaVehiculo(BaseModel):
-
-    nombre = CharField('Nombre', unique=True, max_length=255, blank=False, null=False)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
-    
-    class Meta:
-        verbose_name = 'Marca'
-        verbose_name_plural = 'Marcas'
-        ordering = ['nombre']         
-
-    def __str__(self):
-        return self.nombre
-
-
-""" ##########  5  ########## """
+""" ##########  4  ########## +"""
 class TipoVehiculo(BaseModel):
 
     nombre = CharField('Nombre', unique=True, max_length=255, blank=False, null=False)
@@ -108,6 +85,29 @@ class TipoVehiculo(BaseModel):
         verbose_name = 'Tipo de vehiculo'
         verbose_name_plural = 'Tipos de vehículos'        
         ordering = ['nombre'] 
+
+    def __str__(self):
+        return self.nombre
+
+
+""" ##########  5  ########## """
+class MarcaVehiculo(BaseModel):
+
+    nombre = CharField('Nombre', unique=True, max_length=255, blank=False, null=False)
+    historical = HistoricalRecords()
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
+    
+    class Meta:
+        verbose_name = 'Marca'
+        verbose_name_plural = 'Marcas'
+        ordering = ['nombre']         
 
     def __str__(self):
         return self.nombre
@@ -191,7 +191,7 @@ class Vehiculo(BaseModel):
     marca = ForeignKey(MarcaVehiculo, on_delete = PROTECT)    
     #imagen = ImageField('Imagen del vehiculo', upload_to='vehiculos/%Y/%m/%d', height_field=None, width_field=None, max_length=None, blank=True, null=True)
     fecha = DateTimeField(auto_now_add=True)
-     
+    
     historical = HistoricalRecords()
 
     @property

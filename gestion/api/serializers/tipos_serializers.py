@@ -40,3 +40,14 @@ class TipoCombustibleSerializer(serializers.ModelSerializer):
             'descripcion': instance.descripcion
         }
 
+
+class TipoVehiculoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TipoVehiculo
+        exclude = ('state','created_date','modified_date','deleted_date')
+    
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'nombre': instance.nombre            
+        }
